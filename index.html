@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,
+        initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>myGames</title>
+        <style>
+
+         .score_space{
+            font-size: 40px;
+            background-color: #6f6ca3;
+            border: 2px solid 16161f;
+            position: absolute; /* Абсолютное позиционирование */
+            bottom: 7px; /* Положение от нижнего края */
+            left: 8px;
+            right: 7px;
+            top: 805px;
+        }
+
+        .score{
+            font-size: 60px;
+            position: absolute; /* Абсолютное позиционирование */
+            left: 1000px;
+            top: -45px;
+        }
+
+        .score_txt{
+            font-size: 60px;
+            position: absolute; /* Абсолютное позиционирование */
+            left: 780px;
+            top: -45px;
+        }
+
+        </style>
+    <head>
+    
+    <body>
+     <canvas id="canvas" width="1905" height="800"></canvas>
+    <div class ="score_space"> 
+        <p class ="score" id ="score" ></p>
+        <p class ="score_txt" id ="score_txt" >SCORE: </p>
+    </div>
+        <script src="js/game.js"></script>
+    </head>  
+</head>      
