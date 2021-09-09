@@ -16,7 +16,7 @@ barrierDown.src = "img/barrierDown.png";
 foreground.src = "img/foreground.png";
 
 let garv = 2;
-let xPos = 300;
+let xPos = 200;
 let yPos = 100;
 let flagPress = 0;
 let counterUp = 0;
@@ -28,6 +28,17 @@ let flag_jeypack_image = 0;
 
 document.onkeydown = set_flagPress;
 document.onkeyup = reset_flagPress;
+
+canvas.addEventListener("touchstart", function (e) { set_flagPress(); });
+canvas.addEventListener("touchend", function (e) { reset_flagPress(); });
+
+window.addEventListener("resize", InitApp);
+
+function InitApp() //Растягиваем холст на весь экран
+{
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
 
 function set_flagPress(){
     flagPress = 1; 
