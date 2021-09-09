@@ -92,7 +92,7 @@ function draw(){
 
 ctx.drawImage(background, 0, 0);    
 
-ctx.drawImage(foreground, 0, 560);
+ctx.drawImage(foreground, 0, 660);
 
 if(flag_jeypack_image == 0){
     ctx.drawImage(jetpack, xPos, yPos);
@@ -107,7 +107,7 @@ else if(flag_jeypack_image == 1){
 for(let i = 0; i < objBarrier.length; i++){
     ctx.drawImage(barrierUp, objBarrier[i].x, objBarrier[i].y);
     ctx.drawImage(barrierDown, objBarrier[i].x, objBarrier[i].y + barrierUp.height + ground);
-    ctx.drawImage(foreground, objBarrier[i].x, 560);
+    ctx.drawImage(foreground, objBarrier[i].x, 660);
 
     speed += 0.0003;
     objBarrier[i].x -= 5 + speed;
@@ -125,8 +125,8 @@ for(let i = 0; i < objBarrier.length; i++){
     if(xPos + jetpack.width >= objBarrier[i].x && 
         xPos <= objBarrier[i].x + barrierUp.width &&
         (yPos <= objBarrier[i].y + barrierUp.height ||
-            yPos + jetpack.height >= objBarrier[i].y + barrierUp.height + ground) ||
-            yPos + jetpack.height >=  560)
+            yPos + jetpack.height-20 >= objBarrier[i].y + barrierUp.height + ground) ||
+            yPos + jetpack.height-20 >=  660)
             
             {
                 location.reload();
