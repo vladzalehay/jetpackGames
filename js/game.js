@@ -7,6 +7,7 @@ let foreground = new Image();
 let barrierUp = new Image();
 let barrierDown = new Image();
 let jetpack_fire = new Image();
+let score_space = new Image();
 
 jetpack.src = "img/jetpack.png";
 jetpack_fire.src = "img/jetpack_fire.png";
@@ -14,6 +15,7 @@ background.src = "img/background.png";
 barrierUp.src = "img/barrierUp.png";
 barrierDown.src = "img/barrierDown.png";
 foreground.src = "img/foreground.png";
+score_space.src = "img/score_space.png";
 
 let garv = 2;
 let xPos = 200;
@@ -26,13 +28,14 @@ let xPos_foreground = 0;
 let speed = 0.01;
 let flag_jeypack_image = 0;
 
+
+
 document.onkeydown = set_flagPress;
 document.onkeyup = reset_flagPress;
 
 canvas.addEventListener("touchstart", function (e) { set_flagPress(); });
 canvas.addEventListener("touchend", function (e) { reset_flagPress(); });
 
-window.addEventListener("resize", InitApp);
 
 function InitApp() //Растягиваем холст на весь экран
 {
@@ -88,11 +91,12 @@ objBarrier[0] = {
 
 function draw(){
 
-
+    window.addEventListener("resize", InitApp);
 
 ctx.drawImage(background, 0, 0);    
 
 ctx.drawImage(foreground, 0, 660);
+
 
 if(flag_jeypack_image == 0){
     ctx.drawImage(jetpack, xPos, yPos);
@@ -108,11 +112,15 @@ for(let i = 0; i < objBarrier.length; i++){
     ctx.drawImage(barrierUp, objBarrier[i].x, objBarrier[i].y);
     ctx.drawImage(barrierDown, objBarrier[i].x, objBarrier[i].y + barrierUp.height + ground);
     ctx.drawImage(foreground, objBarrier[i].x, 660);
-
+    ctx.drawImage(score_space, 0, 725);
     speed += 0.0003;
     objBarrier[i].x -= 5 + speed;
 
-    document.getElementById("score").innerHTML = i;
+    ctx.font = "60px Arial";
+    ctx.fillStyle = "white";
+    ctx.fillText( "SCORE:",(canvas.width/2)-100, 785);
+    ctx.fillText( i,(canvas.width/2)+140, 785);
+    //document.getElementById("score").innerHTML = i;
 
     if(objBarrier[i].x >= 100  && objBarrier[i].x <= 105 + speed)
     {
