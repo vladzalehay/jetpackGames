@@ -28,6 +28,11 @@ let xPos_foreground = 0;
 let speed = 0.01;
 let flag_jeypack_image = 0;
 
+let modal_window = document.getElementById("modal_window");
+let modal_window_black_background = document.getElementById("modal_window_black_background");
+
+let score = 0;
+let flag_get_user_event = 0;
 
 
 document.onkeydown = set_flagPress;
@@ -36,6 +41,13 @@ document.onkeyup = reset_flagPress;
 canvas.addEventListener("touchstart", function (e) { set_flagPress(); });
 canvas.addEventListener("touchend", function (e) { reset_flagPress(); });
 
+
+function button_active(){
+    flag_get_user_event = 0;
+    location.reload();
+    modal_window.hidden = false;
+    modal_window_black_background.hidden = false;
+}
 
 function InitApp() //Растягиваем холст на весь экран
 {
@@ -108,6 +120,7 @@ else if(flag_jeypack_image == 1){
 //ctx.drawImage(barrierDown, 500, cvs.height - barrierDown.height - 208);
 
 
+if(flag_get_user_event == 0){
 for(let i = 0; i < objBarrier.length; i++){
     ctx.drawImage(barrierUp, objBarrier[i].x, objBarrier[i].y);
     ctx.drawImage(barrierDown, objBarrier[i].x, objBarrier[i].y + barrierUp.height + ground);
@@ -119,9 +132,9 @@ for(let i = 0; i < objBarrier.length; i++){
     ctx.font = "60px Arial";
     ctx.fillStyle = "white";
     ctx.fillText( "SCORE:",(canvas.width/2)-100, 785);
-    ctx.fillText( i,(canvas.width/2)+140, 785);
+    
     //document.getElementById("score").innerHTML = i;
-
+    score = i;
     if(objBarrier[i].x >= 100  && objBarrier[i].x <= 105 + speed)
     {
         objBarrier.push({
@@ -137,24 +150,27 @@ for(let i = 0; i < objBarrier.length; i++){
             yPos + jetpack.height-20 >=  660)
             
             {
-                location.reload();
-                alert("АЙ!!! БОЛЬНО ЖЕ...");
-                
+                flag_get_user_event = 1;
+     
+                document.getElementById("modal_window").style.visibility = "visible";
+                document.getElementById("modal_window_black_background").style.visibility = "visible";
             }
+            ctx.fillText( score,(canvas.width/2)+140, 785);
+}
 }
 
+if(flag_get_user_event == 0){
+    if(flagPress == 1)
+    {
+        moveUp();
+    }
+    else{
+        moveDown();
+    }
 
-if(flagPress == 1)
-{
-    moveUp();
+    requestAnimationFrame(draw);
+    }
 }
-else{
-    moveDown();
-}
-
-requestAnimationFrame(draw);
-}
-
 
 barrierDown.onload = draw;
  //draw();
