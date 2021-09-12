@@ -66,11 +66,11 @@ function reset_flagPress(){
 }
 
 function moveUp(){
-    counterUp += 0.1 
+    counterUp += 0.06 
     flag_jeypack_image = 1;   
-    yPos += (-(garv*counterUp)) + counterDown - (speed/3); 
-    if(counterDown >= 1){
-        counterDown -= 0.1+counterUp;
+    yPos += -(garv*counterUp) + (counterDown) - (speed/4); 
+    if(counterDown >= 0.1){
+        counterDown -= (counterUp-(counterUp*0.000001));//0.001+
     }
     else
     {
@@ -80,11 +80,11 @@ function moveUp(){
 }
 
 function moveDown(){
-    counterDown += 0.13
+    counterDown += 0.068
     flag_jeypack_image = 0;
-    yPos += ((garv+0.1)*counterDown) - counterUp + (speed/3); 
-    if(counterUp >= 1){
-        counterUp -= 0.11+counterDown;
+    yPos += ((garv+0.2)*counterDown) - (counterUp) + (speed/4); 
+    if(counterUp >= 0.1){
+        counterUp -= (counterDown-(counterDown*0.0000001)); //0.0011+
     }
     else
     {
@@ -101,40 +101,55 @@ objBarrier[0] = {
 }
 
 
+
+
+
 function draw(){
 
     window.addEventListener("resize", InitApp);
 
 ctx.drawImage(background, 0, 0);    
 
-ctx.drawImage(foreground, 0, 660);
 
 
-if(flag_jeypack_image == 0){
-    ctx.drawImage(jetpack, xPos, yPos);
-}
-else if(flag_jeypack_image == 1){
-    ctx.drawImage(jetpack_fire, xPos, yPos);
-}
 //ctx.drawImage(barrierUp, 500, 0);
 //ctx.drawImage(barrierDown, 500, cvs.height - barrierDown.height - 208);
 
 
 if(flag_get_user_event == 0){
+
 for(let i = 0; i < objBarrier.length; i++){
     ctx.drawImage(barrierUp, objBarrier[i].x, objBarrier[i].y);
     ctx.drawImage(barrierDown, objBarrier[i].x, objBarrier[i].y + barrierUp.height + ground);
-    ctx.drawImage(foreground, objBarrier[i].x, 660);
-    ctx.drawImage(score_space, 0, 725);
-    speed += 0.0003;
+    ctx.drawImage(foreground, objBarrier[i].x, 540);
+    //ctx.drawImage(score_space, 0, 735);
+
+    if(flag_jeypack_image == 0){
+        ctx.drawImage(jetpack, xPos, yPos);
+    }
+    else if(flag_jeypack_image == 1){
+        ctx.drawImage(jetpack_fire, xPos, yPos);
+    }
+
+
+    //speed += 1/Math.pow(speed*speed, speed);
+    if(speed <= 10){
+        speed+=0.001
+    }
+    else if(speed > 10 && speed <= 15){
+        speed+=0.0001
+    }
+    else if(speed > 15 && speed <= 20){
+        speed+=0.00001
+    }
+    else if(speed > 20){
+        speed+=0.000001
+    }
+
     objBarrier[i].x -= 5 + speed;
 
-    ctx.font = "60px Arial";
-    ctx.fillStyle = "white";
-    ctx.fillText( "SCORE:",(canvas.width/2)-100, 785);
     
     //document.getElementById("score").innerHTML = i;
-    score = i;
     if(objBarrier[i].x >= 100  && objBarrier[i].x <= 105 + speed)
     {
         objBarrier.push({
@@ -146,18 +161,34 @@ for(let i = 0; i < objBarrier.length; i++){
     if(xPos + jetpack.width >= objBarrier[i].x && 
         xPos <= objBarrier[i].x + barrierUp.width &&
         (yPos <= objBarrier[i].y + barrierUp.height ||
-            yPos + jetpack.height-20 >= objBarrier[i].y + barrierUp.height + ground) ||
-            yPos + jetpack.height-20 >=  660)
-            
+            yPos + jetpack.height-60 >= objBarrier[i].y + barrierUp.height + ground) ||
+            yPos + jetpack.height-60 >=  660)
             {
                 flag_get_user_event = 1;
      
                 document.getElementById("modal_window").style.visibility = "visible";
                 document.getElementById("modal_window_black_background").style.visibility = "visible";
             }
-            ctx.fillText( score,(canvas.width/2)+140, 785);
+
+            if(score != i){
+                //ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+                ctx.fillStyle = "rgba(0, 0, 200, 0)";
+                ctx.fillRect((canvas.width/2)+140-50,785-50,100,100);
+                //ctx.fillText("", (canvas.width/2)+140, 785);   
+                ctx.fillStyle = "white";
+            }
+             
+
+            score = i; 
+    
+          
 }
 }
+
+ctx.fillText(score, (canvas.width/2)+140, 785); 
+ctx.font = "60px Arial";
+ctx.fillStyle = "white";
+ctx.fillText( "SCORE:",(canvas.width/2)-100, 785);
 
 if(flag_get_user_event == 0){
     if(flagPress == 1)
@@ -167,9 +198,8 @@ if(flag_get_user_event == 0){
     else{
         moveDown();
     }
-
-    requestAnimationFrame(draw);
     }
+    requestAnimationFrame(draw); 
 }
 
 barrierDown.onload = draw;
