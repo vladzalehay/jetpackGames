@@ -1,6 +1,10 @@
 let cvs = document.getElementById("canvas");
 let ctx = cvs.getContext("2d");
 
+let audio_background = new Audio('audio/Sound_background.mp3');
+let audio_game_over = new Audio('audio/Sound_game_over.mp3');
+let audio_up_motion = new Audio('audio/Sound_up_motion.mp3');
+
 let jetpack = new Image();
 let background = new Image();
 let foreground = new Image();
@@ -42,6 +46,7 @@ canvas.addEventListener("touchstart", function (e) { set_flagPress(); });
 canvas.addEventListener("touchend", function (e) { reset_flagPress(); });
 
 
+
 function button_active(){
     flag_get_user_event = 0;
     location.reload();
@@ -66,11 +71,14 @@ function reset_flagPress(){
 }
 
 function moveUp(){
-    counterUp += 0.06 
+    audio_up_motion.play();
+    audio_background.volume = 0.5;
+    audio_background.play();
+    counterUp += 0.02 
     flag_jeypack_image = 1;   
     yPos += -(garv*counterUp) + (counterDown) - (speed/4); 
     if(counterDown >= 0.1){
-        counterDown -= (counterUp-(counterUp*0.000001));//0.001+
+        counterDown -= 0.001+(counterUp-(counterUp*0.000001));//
     }
     else
     {
@@ -80,11 +88,12 @@ function moveUp(){
 }
 
 function moveDown(){
-    counterDown += 0.068
+    audio_up_motion.pause();
+    counterDown += 0.0201
     flag_jeypack_image = 0;
     yPos += ((garv+0.2)*counterDown) - (counterUp) + (speed/4); 
     if(counterUp >= 0.1){
-        counterUp -= (counterDown-(counterDown*0.0000001)); //0.0011+
+        counterUp -= 0.0011+ (counterDown-(counterDown*0.0000001)); //
     }
     else
     {
@@ -107,7 +116,7 @@ objBarrier[0] = {
 function draw(){
 
     window.addEventListener("resize", InitApp);
-
+    
 ctx.drawImage(background, 0, 0);    
 
 
@@ -123,27 +132,30 @@ for(let i = 0; i < objBarrier.length; i++){
     ctx.drawImage(barrierDown, objBarrier[i].x, objBarrier[i].y + barrierUp.height + ground);
     ctx.drawImage(foreground, objBarrier[i].x, 540);
     //ctx.drawImage(score_space, 0, 735);
+	
 
     if(flag_jeypack_image == 0){
+        ctx.shadowColor = 'rgba(0, 0, 0, 0)';
         ctx.drawImage(jetpack, xPos, yPos);
     }
     else if(flag_jeypack_image == 1){
+        ctx.shadowColor = 'rgba(0, 0, 0, 0)';
         ctx.drawImage(jetpack_fire, xPos, yPos);
     }
 
 
     //speed += 1/Math.pow(speed*speed, speed);
     if(speed <= 10){
-        speed+=0.001
-    }
-    else if(speed > 10 && speed <= 15){
         speed+=0.0001
     }
+    else if(speed > 10 && speed <= 15){
+        speed+=0.00002
+    }
     else if(speed > 15 && speed <= 20){
-        speed+=0.00001
+        speed+=0.000003
     }
     else if(speed > 20){
-        speed+=0.000001
+        speed+=0.0000004
     }
 
     objBarrier[i].x -= 5 + speed;
@@ -165,7 +177,9 @@ for(let i = 0; i < objBarrier.length; i++){
             yPos + jetpack.height-60 >=  660)
             {
                 flag_get_user_event = 1;
-     
+                audio_up_motion.pause();
+                audio_background.pause();
+                audio_game_over.play();
                 document.getElementById("modal_window").style.visibility = "visible";
                 document.getElementById("modal_window_black_background").style.visibility = "visible";
             }
