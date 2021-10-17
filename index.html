@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <meta charset="UTF-8">
-        <meta http-equiv="Cache-Control" content="no-cache">
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
         <meta name="viewport" content="width=device-width,
         initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -23,7 +25,7 @@
                 padding: 0;
                 margin: 0;
                 font-size: 16px;
-                font-family: arial;
+                font-family: sans-serif;
                 background: #f7f7f7;
                 color: #373737;
             }
@@ -38,34 +40,79 @@
                 right:  20%;    
                 font-size: 26px; 
                 font-family: arial;
-                background: #525e94;
-                color: #bdc5df;
             }
 
-            .button{
+            .button_reload{
                 -webkit-appearance: none;
                 -moz-appearance: none;
                 appearance: none;
-                width: 50%;
-                height: 50%;
                 position: absolute;
-                top: 25%;
-                left: 25%;
-                font-size: 136%; 
-                font-family: arial;
+                top: 95%;
+                left: 40%;
+                font-size: 186%;     
+                color: #e9dcdc;
                 border: none;
-                border-radius: 5px 5px;
-                background: #999fd1;
-                color: #303955;
+                background-color: Transparent;
+                background-repeat:no-repeat;
+                border: none;
+                cursor:pointer;
+                overflow: hidden;
+                outline:none;
             }
 
-            .button:active {
-                box-shadow: inset 0 0 60px rgba(44, 50, 80, 0.877);
+            .button_reload:hover {
+                font-size: 206%;
+                top: 94%;
+                left: 39%;
+            }
+
+            .button_reload:active  {
+                color: #ada0a0;
+            }
+
+            .start_window{
+                visibility: visible;
+                z-index: 11;   
+                position: fixed;
+                top: 20%;
+                left: 20%;
+                bottom:  20%;
+                right:  20%;    
+                font-size: 40px; 
+            }
+
+            .button_start{
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                position: absolute;
+                top: 35%;
+                left: 18%;
+                font-size: 286%;     
+                color: #9c9393;
+                border: none;
+                background-color: Transparent;
+                background-repeat:no-repeat;
+                border: none;
+                cursor:pointer;
+                overflow: hidden;
+                outline:none;
+            }
+
+            .button_start:hover {
+                font-size: 306%;
+                top: 34%;
+                left: 16%;
+                color: #383131;
+            }
+
+            .button_start:active  {
+                color: #d1c4c4;
             }
 
             .modal_window_black_background{
-                visibility: hidden;
-                z-index: 9 ;
+                visibility: visible;
+                z-index: 1;
                 background: #000000;
                 opacity: 0.7;
                 position: fixed;
@@ -84,13 +131,36 @@
                 left: 0;
                 margin: 0;
             }
+
+            .text_window{
+                z-index: 11;
+                visibility: hidden;
+                background: transparent;
+                width: 100%;
+                height: 100%;
+                position: fixed;
+                top: 30%;
+                left: 13%;
+                color: #FFF;
+                opacity: 0.5;
+                font-size: 150px;  
+            }
         </style>
     <head>
     
+
     <body>
      <canvas id="canvas" width="1870" height="800" class="canvas"></canvas>
     <dev class ="modal_window" id="modal_window"> 
-        <input type="button" class="button" value="RESTART" onclick="button_active()">
+        <input type="button" class="button_reload" value="RESTART" onclick="button_reload_active()">
+    </dev>
+
+    <dev class ="text_window" id="text_window"> 
+        <p> Press SPACE button</p>
+    </dev>
+
+    <dev class ="start_window" id="start_window"> 
+        <input type="button" class="button_start" value="START GAME" onclick="start()">
     </dev>
 
     <dev class ="modal_window_black_background" id="modal_window_black_background"> 
