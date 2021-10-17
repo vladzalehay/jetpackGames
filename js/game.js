@@ -170,6 +170,7 @@ function moveDown(){
 let ii = 0;
 
 function draw(){
+    audio_background.play();
     window.addEventListener("resize", InitApp);
 
 //ctx.drawImage(barrierUp, 500, 0);
