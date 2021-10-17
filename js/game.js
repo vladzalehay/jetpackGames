@@ -206,7 +206,7 @@ for(i = iteration; i < objBarrier.length; i++){
     if(score == 0 && yPos + jetpack.height-60 >=  400 && flag_press_button == 0)
     {
         document.getElementById("text_window").style.visibility = "visible";
-        //document.getElementById("modal_window_black_background").style.visibility = "visible";
+        document.getElementById("modal_window_black_background").style.visibility = "visible";
 
         for(let i = 0; i < 100000000; i++)
         {
