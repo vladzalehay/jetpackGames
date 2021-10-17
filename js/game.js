@@ -83,6 +83,7 @@ function start(){
     document.getElementById("modal_window_black_background").style.visibility = "hidden";
 }
 
+
 function button_reload_active(){
     objBarrier[0] = 0;
     objBarrier[0] = {
@@ -105,6 +106,7 @@ function button_reload_active(){
     draw();
 }
 
+
 function button_active(){
     flag_get_user_event = 0;
     location.reload();
@@ -121,12 +123,14 @@ function InitApp() //Растягиваем холст на весь экран
 
 
 function set_flagPress(){
+    flag_press_button = 1;
     flagPress = 1; 
     //counterDown = 0.1;
 } 
 
 
 function reset_flagPress(){
+    flag_press_button = 1;
     flagPress = 0; 
     //counterUp = 0.1;
 }
