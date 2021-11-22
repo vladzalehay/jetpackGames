@@ -141,9 +141,9 @@ function moveUp(){
     flag_press_button = 1;
     counterUp += 0.01 
     flag_jeypack_image = 1;   
-    yPos += -(garv*counterUp/2) + (counterDown) - (speed/4); 
+    yPos += -((speed/(speed/1.5))*garv*(counterUp-counterDown)); 
     if(counterDown >= 0.1){
-        counterDown -= (counterUp-(counterUp*0.9));//
+        counterDown -= (counterUp-(counterUp*0.95));//
     }
     else
     {
@@ -154,11 +154,11 @@ function moveUp(){
 
 function moveDown(){
     audio_up_motion.pause();
-    counterDown += 0.0101
+    counterDown += 0.01
     flag_jeypack_image = 0;
-    yPos += ((garv+0.2)*counterDown/2) - (counterUp) + (speed/4); 
+    yPos += ((speed/(speed/1.5))*garv*(counterDown-counterUp)); 
     if(counterUp >= 0.1){
-        counterUp -=  (counterDown-(counterDown*0.9)); //
+        counterUp -=  (counterDown-(counterDown*0.95)); //
     }
     else
     {
@@ -205,7 +205,7 @@ for(let counter = iteration1; counter < objBarrier.length; counter++)
 
 for(i = iteration; i < objBarrier.length; i++){
 
-    if(score == 0 && yPos + jetpack.height-60 >=  400 && flag_press_button == 0)
+    if(score == 0 && yPos + jetpack.height-60 >=  290 && flag_press_button == 0)
     {
         document.getElementById("text_window").style.visibility = "visible";
         //document.getElementById("modal_window_black_background").style.visibility = "visible";
@@ -253,10 +253,10 @@ for(i = iteration; i < objBarrier.length; i++){
     if(flag_get_user_event == 0){
     //speed += 1/Math.pow(speed*speed, speed);
     if(speed <= 10){
-        speed+=0.0001
+        speed+=0.0009
     }
     else if(speed > 10 && speed <= 15){
-        speed+=0.00005
+        speed+=0.00009
     }
     else if(speed > 15 && speed <= 20){
         speed+=0.000025
