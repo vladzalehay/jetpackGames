@@ -209,7 +209,6 @@ for(i = iteration; i < objBarrier.length; i++){
     {
         document.getElementById("text_window").style.visibility = "visible";
         //document.getElementById("modal_window_black_background").style.visibility = "visible";
-
         for(let i = 0; i < 100000000; i++)
         {
             i++;
